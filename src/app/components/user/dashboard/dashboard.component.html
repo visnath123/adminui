@@ -1,0 +1,70 @@
+<div class="dashboard-content">
+    <form [formGroup]="searchUsersForm">
+        <div class="form-group form-inline">
+            <input class="form-control ml-2 center-input" type="text" formControlName="filter"
+                placeholder="search by name, email and role" (input)="search()" />
+        </div>
+    </form>
+    <div class="table-container">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col" class="selection">
+                        <input mdbCheckbox type="checkbox" #selectUnselectAllUsersCheckbox (change)="selectDeselectAllUsers()"
+                        [checked]="pagesWithAllSelectedUsers.has(page)">
+                    </th>
+                    <th scope="col" class="name">Name</th>
+                    <th scope="col" class="email">Email</th>
+                    <th scope="col" class="role">Role</th>
+                    <th scope="col" class="actions">Actions</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="(users|async).length != 0">
+                <tr *ngFor="let user of (users|async)|slice: (page-1) * pageSize : page * pageSize; index as currentIndex"
+                    [class.highlightRow]="isUserSelected(user)">
+                    <td class="col selection">
+                        <input mdbCheckbox type="checkbox" #selectUnselectUserCheckbox (change)="selectUser(user, currentIndex)" [checked]="isUserSelected(user)">
+                    </td>
+                    <td class="col name">
+                        <ngb-highlight [result]="user.name" [term]="searchUsersForm.get('filter').value">
+                        </ngb-highlight>
+                    </td>
+                    <td class="col email">
+                        <ngb-highlight [result]="user.email" [term]="searchUsersForm.get('filter').value">
+                        </ngb-highlight>
+                    </td>
+                    <td class="col role">
+                        <ngb-highlight [result]="user.role" [term]="searchUsersForm.get('filter').value">
+                        </ngb-highlight>
+                    </td>
+                    <td class="col actions">
+                        <span title="edit user" (click)="editUser(user)">
+                            <i-bs name="pencil-fill" width="20" height="20"></i-bs>
+                        </span>
+                        <span title="delete user" (click)="deleteUser(user)">
+                            <i-bs name="trash" width="20" height="20"></i-bs>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody *ngIf="(users|async).length == 0">
+                <tr>
+                    <td colspan="5">
+                        <div class="d-flex justify-content-center emptyContainer"> No Users found </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table-footer">
+        <div class="deleteActionContainer">
+            <button ngbButton class="btn btn-primary btn-sm" [disabled]="!selectedUsers.has(page) || selectedUsers.get(page).length == 0"
+                (click)="deleteSelectedUsers()"> Delete Selected</button>
+        </div>
+        <div *ngIf="(users|async).length != 0" class="pagination d-flex justify-content-center">
+            <ngb-pagination #paginator [(page)]="page" [pageSize]="pageSize" [collectionSize]="users.value.length"
+            (pageChange)="changePage($event)">
+            </ngb-pagination>
+        </div>
+    </div>
+</div>

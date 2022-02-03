@@ -1,0 +1,62 @@
+.center-input {
+  width: 100%;
+  margin: 12px 8px -5px 0px;
+}
+.table {
+  tr {
+    .selection {
+      width: 5%;
+      justify-content: center;
+    }
+    .name,
+    .email,
+    .role {
+      width: 35%;
+    }
+    .role{
+        text-transform: capitalize;
+    }
+    .actions {
+      width: 5%;
+      justify-content: center;
+      span{
+        cursor: pointer;
+      }
+      span:nth-of-type(odd) {
+        float: left;
+      }
+      span:nth-of-type(even) {
+        float: right;
+      }
+    }
+  }
+}
+.dashboard-content {
+  min-width: 60vw;
+  max-width: 60vw;
+}
+.highlightRow {
+  background-color: blue;
+}
+tr.highlightRow:nth-of-type(odd) {
+  background-color: #73746e6b !important;
+}
+tr.highlightRow:nth-of-type(even) {
+  background-color: #8d8e84 !important;
+}
+.deleteActionContainer{
+    float: left;
+    width: 15%;
+}   
+.pagination{
+    width: 70%;
+}
+.error{
+    color: red;
+}
+.form-control-container{
+    margin-top: 18px;
+    label{
+        margin-bottom: unset !important;
+    }
+}

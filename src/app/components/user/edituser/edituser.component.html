@@ -1,0 +1,48 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Edit User: {{ user.name }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="editUserForm">
+        <div class="form-group">
+            <div class="form-control-container">
+                <label for="userName">Name</label>
+                <div class="input-group">
+                    <input class="form-control" name="userName" formControlName="userName">
+                </div>
+                <span class="error"
+                    *ngIf="editUserForm.get('userName').errors && editUserForm.get('userName').errors['required']">
+                    Name is required
+                </span>
+            </div>
+            <div class="form-control-container">
+                <label for="userEmail">Email</label>
+                <div class="input-group">
+                    <input class="form-control" name="userEmail" formControlName="userEmail">
+                </div>
+                <span class="error"
+                    *ngIf="editUserForm.get('userEmail').errors && editUserForm.get('userEmail').errors['required']">
+                    Email is required
+                </span>
+                <span class="error"
+                    *ngIf="editUserForm.get('userEmail').errors && editUserForm.get('userEmail').errors['email']">
+                    Enter a valid Email
+                </span>
+            </div>
+            <div class="form-control-container">
+                <label for="userRole">Role</label>
+                <div class="input-group">
+                    <select class="form-select form-control" formControlName="userRole">
+                        <option value="admin">Admin</option>
+                        <option value="member">Member</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="updateUser()">Update</button>
+</div>
